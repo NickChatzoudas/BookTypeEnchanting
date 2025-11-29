@@ -1,0 +1,33 @@
+{
+  "itemGroup.booktypesenchanting.type_books": "Type Books",
+
+  "item.booktypesenchanting.sword_book": "Sword Type Book",
+  "item.booktypesenchanting.sword_book.type": "Swords",
+  "item.booktypesenchanting.pickaxe_book": "Pickaxe Type Book",
+  "item.booktypesenchanting.pickaxe_book.type": "Pickaxes",
+  "item.booktypesenchanting.axe_book": "Axe Type Book",
+  "item.booktypesenchanting.axe_book.type": "Axes",
+  "item.booktypesenchanting.shovel_book": "Shovel Type Book",
+  "item.booktypesenchanting.shovel_book.type": "Shovels",
+  "item.booktypesenchanting.hoe_book": "Hoe Type Book",
+  "item.booktypesenchanting.hoe_book.type": "Hoes",
+  "item.booktypesenchanting.helmet_book": "Helmet Type Book",
+  "item.booktypesenchanting.helmet_book.type": "Helmets",
+  "item.booktypesenchanting.chestplate_book": "Chestplate Type Book",
+  "item.booktypesenchanting.chestplate_book.type": "Chestplates",
+  "item.booktypesenchanting.leggings_book": "Leggings Type Book",
+  "item.booktypesenchanting.leggings_book.type": "Leggings",
+  "item.booktypesenchanting.boots_book": "Boots Type Book",
+  "item.booktypesenchanting.boots_book.type": "Boots",
+  "item.booktypesenchanting.bow_book": "Bow Type Book",
+  "item.booktypesenchanting.bow_book.type": "Bows",
+  "item.booktypesenchanting.crossbow_book": "Crossbow Type Book",
+  "item.booktypesenchanting.crossbow_book.type": "Crossbows",
+  "item.booktypesenchanting.trident_book": "Trident Type Book",
+  "item.booktypesenchanting.trident_book.type": "Tridents",
+  "item.booktypesenchanting.fishing_rod_book": "Fishing Rod Type Book",
+  "item.booktypesenchanting.fishing_rod_book.type": "Fishing Rods",
+
+  "tooltip.booktypesenchanting.type_book": "Only rolls enchantments for: %s",
+  "tooltip.booktypesenchanting.type_book.usage": "Place on enchanting table to create enchanted book"
+}

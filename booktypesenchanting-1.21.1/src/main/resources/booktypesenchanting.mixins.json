@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "com.chatz.booktypesenchanting.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "booktypesenchanting.refmap.json",
+  "mixins": [
+    "EnchantmentMenuMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
+
