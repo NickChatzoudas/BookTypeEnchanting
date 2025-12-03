@@ -4,6 +4,10 @@ import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 public class ModItems {
+    // Pitchfork item - used for crafting trident books
+    public static final DeferredItem<Item> PITCHFORK = BookTypesEnchanting.ITEMS.register("pitchfork",
+            () -> new Item(new Item.Properties()));
+
     public static final DeferredItem<Item> SWORD_BOOK = BookTypesEnchanting.ITEMS.register("sword_book",
             () -> new TypeBookItem(EnchantmentBookType.SWORD));
     public static final DeferredItem<Item> PICKAXE_BOOK = BookTypesEnchanting.ITEMS.register("pickaxe_book",

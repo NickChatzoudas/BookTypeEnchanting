@@ -15,14 +15,20 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import com.chatz.booktypesenchanting.network.ModVersionPayload;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(BookTypesEnchanting.MODID)
 public class BookTypesEnchanting {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "booktypesenchanting";
+    // Network protocol version - must match on both client and server
+    public static final String PROTOCOL_VERSION = "1";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
     // Create a Deferred Register to hold Blocks which will all be registered under the "booktypesenchanting" namespace
@@ -39,6 +45,7 @@ public class BookTypesEnchanting {
             .withTabsBefore(CreativeModeTabs.TOOLS_AND_UTILITIES)
             .icon(() -> ModItems.SWORD_BOOK.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
+                output.accept(ModItems.PITCHFORK.get());
                 output.accept(ModItems.SWORD_BOOK.get());
                 output.accept(ModItems.PICKAXE_BOOK.get());
                 output.accept(ModItems.AXE_BOOK.get());
@@ -59,6 +66,8 @@ public class BookTypesEnchanting {
     public BookTypesEnchanting(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+        // Register network handler to enforce mod presence on both sides
+        modEventBus.addListener(this::registerNetworkHandlers);
 
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
@@ -81,6 +90,30 @@ public class BookTypesEnchanting {
         LOGGER.info("Book Types Enchanting mod initialized");
     }
 
+    private void registerNetworkHandlers(RegisterPayloadHandlersEvent event) {
+        // Register a network channel with the protocol version
+        // This ensures both client and server have the mod installed
+        // If the protocol version doesn't match, the connection will be rejected
+        PayloadRegistrar registrar = event.registrar(PROTOCOL_VERSION);
+
+        // Register in CONFIGURATION phase - this is checked during login and REQUIRED on both sides
+        // If either side is missing this registration, the connection will be rejected
+        registrar.configurationBidirectional(
+            ModVersionPayload.TYPE,
+            ModVersionPayload.STREAM_CODEC,
+            (payload, context) -> handleVersionPayload(payload, context)
+        );
+
+        LOGGER.info("Registered network handlers - mod required on both client and server");
+    }
+
+    private void handleVersionPayload(ModVersionPayload payload, IPayloadContext context) {
+        // This handler is called when the payload is received during configuration phase
+        // We don't need to do anything with it - just having it registered enforces the requirement
+        context.enqueueWork(() -> {
+            LOGGER.debug("Received version payload: {}", payload.version());
+        });
+    }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
